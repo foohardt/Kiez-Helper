@@ -62,4 +62,20 @@ authRoutes.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+authRoutes.get("/profile", (req, res, next) => {
+  res.render("auth/profile");
+});
+
+authRoutes.get("/private-page", (req, res, next) => {
+  res.render("auth/private-page");
+});
+
+authRoutes.get("/detail", (req, res, next) => {
+  res.render("auth/service-detail");
+});
+
+authRoutes.get("/new", (req, res, next) => {
+  res.render("auth/new-service");
+});
+
 module.exports = authRoutes;

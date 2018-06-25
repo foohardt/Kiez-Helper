@@ -1,8 +1,26 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-a {
-  color: #00B7FF; }
+.index-main {
+  color: #fff;
+  background: url(https://picsum.photos/g/500) no-repeat;
+  background-size: cover;
+  height: 10rem;
+  margin-bottom: 2rem;
+  padding: 2rem 0; }
+
+.profile-img > img {
+  width: 50%;
+  border-radius: 50%; }
+
+.detail-card {
+  border: 0; }
+
+.service-card > .row > .col-4 > img,
+.detail-card > .row > .col-4 > img {
+  border-radius: 50%; }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,42 @@
+<h2>Create Service</h2>
+
+<form action="/" method="POST" id="form-container">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input id="title"  class="form-control" type="text" name="title" placeholder="Service Name">
+  </div>
+  <div class="form-group">
+    <label for="category">Category</label><br>
+    <select class="custom-select">
+      <option selected>Select the service category</option>
+      <option value="1">Shopping</option>
+      <option value="2">Houshold cleaning</option>
+      <option value="3">GardeningBaby sitting</option>
+      <option value="4">Pet sitting</option>
+      <option value="5">Computer services</option>
+      <option value="6">Bureaucracy services</option>
+      <option value="7">Craft work</option>
+      <option value="8">Moving and transportation</option>
+      <option value="9">Clearing out</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="date">Date</label>
+    <input id="date" class="form-control" type="date" name="date" placeholder="">
+  </div>
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input id="location"  class="form-control" type="text" name="location" placeholder="">
+  </div>
+
+  <br>
+  {{#if message }}
+    <div class="error-message">{{ message }}</div>
+  {{/if}}
+
+  <button type="submit" class="btn btn-primary mb-3">Create</button>
+</form>
