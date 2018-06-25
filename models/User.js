@@ -7,8 +7,8 @@ const userSchema = new Schema({
   email:    { type: String, required: true },
   picture:  { type: String, default: ''},
   avgRating: { type: Number, default: 0},
-  _rating_id:[{ type: Rating.Types.ObjectId, ref: '_id'}],
-  _currentService_id:[{ type: Service.Types.ObjectId, ref: '_id'}],
+  _rating_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
+  _currentService_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
   servicesDone: Number,
 }, {
   timestamps: {
