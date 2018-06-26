@@ -89,19 +89,14 @@ authRoutes.get("/logout", (req, res) => {
 // Private home
 
 authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-<<<<<<< HEAD
-  res.render("auth/private-page", { user: req.user });
-=======
-  
   Service.find()
   .then((services) => {
-    console.log(services)
+    // console.log(services)
     res.render("auth/private-page", { services });
   })
   .catch((error) => {
     console.log(error)
   })  
->>>>>>> eafedc7b46737987245bc8135a76f1e8497292c3
 });
 
 // Profile page
@@ -139,8 +134,17 @@ authRoutes.post("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
 // Service detail page
 
-authRoutes.get("/auth/detail", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  res.render("auth/service-detail");
+authRoutes.get("/auth/detail/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  let serviceId = req.params.serviceId;
+  // console.log('serviceId' + serviceId);
+  Service.findById(serviceId)
+    .then(serviceDetail => {
+      // console.log(serviceDetail)
+      res.render("auth/service-detail", { serviceDetail });
+    })
+    .catch((error) => {
+      console.log(error)
+    })  
 });
 
 module.exports = authRoutes;

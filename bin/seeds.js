@@ -45,14 +45,14 @@ const users = [
 const services = [
   {
     title: "Need help with my cat",
-    type: "Pet sitting",
+    category: "Pet sitting",
     description: "I need someone to feed my cat while im on vacation. Beware it loves to cuddle.",
     location: "Stalauer Allee 6, 10245 Berlin",
     time: new Date,
   },
   {
     title: "Heavy things to care",
-    type: "Moving and transportation",
+    category: "Moving and transportation",
     description: "I plan to buy new furniture and need someone to bring it upstairs",
     location: "Stalauer Allee 6, 10245 Berlin",
     time: new Date,
