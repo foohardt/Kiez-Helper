@@ -105,22 +105,23 @@ authRoutes.get("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 });
 
 authRoutes.post("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  console.log("req.body",req.body)
 
-  let newService = new Service({
+  console.log("req.body", req.body)
+
+  let newService = new Service({  
     title:        req.body.title,
-    category:     req.body.category, 
+    category:     req.body.category,
     description:  req.body.description,
     location:     req.body.location,
-    time:         req.body.time,
+    time:         req.body.date,
   })
-  // console.log("newService", newService);
-  
+  console.log("newService", newService);
+
   newService.save((error) => {
-    if(error) { next ( error ) }
+    if (error) { next(error) }
     else {
-      // console.log("DEBUG saved new service")
-      res.redirect('/auth/priavte-page')
+      console.log("DEBUG saved new service")
+      res.redirect('/auth/private-page')
     }
   })
 });
