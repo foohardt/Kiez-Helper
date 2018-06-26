@@ -17,6 +17,8 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
+const User =require("./models/User")
+
 mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/find-my-help', {useMongoClient: true})
