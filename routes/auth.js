@@ -75,7 +75,7 @@ authRoutes.get("/logout", (req, res) => {
     res.redirect("/");
     return
   }
-  req.session.destroy((err) => {  
+  req.session.destroy((err) => {
     if (err) {
       next(err);
       return
@@ -96,11 +96,35 @@ authRoutes.get("/auth/profile", ensureLogin.ensureLoggedIn(), (req, res, next) =
   res.render("auth/profile");
 });
 
-// Service
+// New service
 
 authRoutes.get("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render("auth/new-service");
 });
+
+authRoutes.post("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+
+  let newService = new Service({
+    title: req.body.title,
+  })
+
+
+
+  const newPlace = new Place({
+    name: req.body.name,
+    description: req.body.description,
+    type: req.body.type,
+    location: loc
+  });
+  newPlace.save((error) => {
+    if (error) { next(error) }
+    else {
+      res.redirect('/');
+    }
+  })
+
+
+})
 
 // Service detail page
 
