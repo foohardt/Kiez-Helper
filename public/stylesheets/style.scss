@@ -1,15 +1,15 @@
+$primary:#03C9A9;
+$btn-border-radius: 1.25rem;
+@import "node_modules/bootstrap/scss/bootstrap";
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-body {
+nav {
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
 }
-// nav {
-//   background: #03C9A9;
-//   box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
-// }
 .index-main {
   color: #fff;
   background: url(https://picsum.photos/g/500) no-repeat;
@@ -18,8 +18,13 @@ body {
   margin-bottom: 2rem;
   padding: 2rem 0;
 }
-.profile-img {
+.index-cont {
+  a {
+    display: block;
+  }
+
 }
+
 .profile-img > img {
   width: 50%;
   border-radius: 50%;
