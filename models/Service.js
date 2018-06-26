@@ -3,16 +3,16 @@ const Schema   = mongoose.Schema;
 
 const serviceSchema = new Schema({
   title: { type: String, required: true },
-  type: {
+  category: {
     type: String,
     enum : ['Shopping', 'Houshold cleaning', 'Gardening', 'Baby sitting', 'Pet sitting', 
             'Computer services', 'Bureaucracy services', 'Craft work', 'Moving and transportation',
           'Clearing out'],
       required: true
   },
-  description: { type: String, required: true },
+  description: { type: String },
   location:  { type: String, default: 'Request location', required: true },
-  time: { type: Date, required: true },
+  time: { type: String, required: true },
   _user_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
 }, {
   timestamps: {

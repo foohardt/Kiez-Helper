@@ -1,9 +1,11 @@
 const express = require('express');
 const passport = require('passport');
 const User = require('../models/User');
+const Service = require('../models/Service');
+const Ratin = require('../models/Rating');
 const authRoutes = express.Router();
 const ensureLogin = require('connect-ensure-login');
-const router = express.Router();
+
 
 
 // Bcrypt to encrypt passwords
@@ -103,28 +105,25 @@ authRoutes.get("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 });
 
 authRoutes.post("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  console.log("req.body",req.body)
 
   let newService = new Service({
-    title: req.body.title,
+    title:        req.body.title,
+    category:     req.body.category, 
+    description:  req.body.description,
+    location:     req.body.location,
+    time:         req.body.time,
   })
-
-
-
-  const newPlace = new Place({
-    name: req.body.name,
-    description: req.body.description,
-    type: req.body.type,
-    location: loc
-  });
-  newPlace.save((error) => {
-    if (error) { next(error) }
+  // console.log("newService", newService);
+  
+  newService.save((error) => {
+    if(error) { next ( error ) }
     else {
-      res.redirect('/');
+      // console.log("DEBUG saved new service")
+      res.redirect('/auth/priavte-page')
     }
   })
-
-
-})
+});
 
 // Service detail page
 
