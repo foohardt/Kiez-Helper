@@ -5,8 +5,8 @@ const ratingSchema = new Schema({
   rate: { type: Number, required: true },
   text: { type: String, required: true }, 
   date: { type: Date, required: true },
-  _user_id:[{ type: User.Types.ObjectId, ref: '_id'}],
-  _service_id:[{ type: Service.Types.ObjectId, ref: '_id'}],
+  _user_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
+  _service_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
 }, {
   timestamps: {
     createdAt: 'created_at',

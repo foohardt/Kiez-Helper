@@ -1,32 +1,65 @@
-const express = require("express");
-const passport = require('passport');
-const authRoutes = express.Router();
-const User = require("../models/User");
+const express     = require('express');
+const passport    = require('passport');
+const User        = require('../models/User');
+const authRoutes  = express.Router();
 
+ 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 
-authRoutes.get("/login", (req, res, next) => {
+// Log in
+
+authRoutes.get("/auth/login", (req, res, next) => {
   res.render("auth/login", { "message": req.flash("error") });
 });
 
-authRoutes.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/auth/login",
-  failureFlash: true,
-  passReqToCallback: true
-}));
+authRoutes.post('/auth/login', (req, res, next) => {
+  const emailInput = req.body.email;
+  const passwordInput = req.body.password;
 
-authRoutes.get("/signup", (req, res, next) => {
+  if (emailInput === '' || passwordInput === '') {
+    res.render('auth/login', {
+      errorMessage: 'Enter both email and password to log in.'
+    });
+    return;
+  }
+
+  User.findOne({ email: emailInput }, (err, theUser) => {
+    if (err || theUser === null) {
+      res.render('auth/login', {
+        errorMessage: `There isn't an account with email ${emailInput}.`
+      });
+      return;
+    }
+
+    if (!bcrypt.compareSync(passwordInput, theUser.password)) {
+      res.render('auth/login', {
+        errorMessage: 'Invalid password.'
+      });
+      return;
+    }
+
+    req.session.currentUser = theUser;
+    console.log("DEBUG: authentification complete")
+    res.redirect('/auth/private-page');
+  });
+});
+
+// Sign up
+
+authRoutes.get("/auth/signup", (req, res, next) => {
   res.render("auth/signup");
 });
 
-authRoutes.post("/signup", (req, res, next) => {
+authRoutes.post("/auth/signup", (req, res, next) => {
+
   const username = req.body.username;
   const password = req.body.password;
-  const rol = req.body.role;
+  const email    = req.body.email;
+  const picture  = req.body.image;
+
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });
     return;
@@ -44,7 +77,8 @@ authRoutes.post("/signup", (req, res, next) => {
     const newUser = new User({
       username,
       password: hashPass,
-      role:"teacher"
+      email,
+      picture,
     });
 
     newUser.save((err) => {
@@ -62,19 +96,19 @@ authRoutes.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-authRoutes.get("/profile", (req, res, next) => {
+authRoutes.get("/auth/profile", (req, res, next) => {
   res.render("auth/profile");
 });
 
-authRoutes.get("/private-page", (req, res, next) => {
+authRoutes.get("/auth/private-page", (req, res, next) => {
   res.render("auth/private-page");
 });
 
-authRoutes.get("/detail", (req, res, next) => {
+authRoutes.get("/auth/detail", (req, res, next) => {
   res.render("auth/service-detail");
 });
 
-authRoutes.get("/new", (req, res, next) => {
+authRoutes.get("/auth/new", (req, res, next) => {
   res.render("auth/new-service");
 });
 

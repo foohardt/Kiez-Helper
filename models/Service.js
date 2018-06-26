@@ -13,7 +13,7 @@ const serviceSchema = new Schema({
   description: { type: String, required: true },
   location:  { type: String, default: 'Request location', required: true },
   time: { type: Date, required: true },
-  _user_id:[{ type: User.Types.ObjectId, ref: '_id'}],
+  _user_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
 }, {
   timestamps: {
     createdAt: 'created_at',

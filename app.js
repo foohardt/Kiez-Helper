@@ -16,7 +16,7 @@ const flash      = require("connect-flash");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/ironhack-project-two', {useMongoClient: true})
+  .connect('mongodb://localhost/find-my-help', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
@@ -66,7 +66,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 // Enable authentication using session + passport
 app.use(session({
-  secret: 'irongenerator',
+  secret: 'find-my-help',
   resave: true,
   saveUninitialized: true,
   store: new MongoStore( { mongooseConnection: mongoose.connection })
@@ -74,7 +74,6 @@ app.use(session({
 app.use(flash());
 require('./passport')(app);
     
-
 const index = require('./routes/index');
 app.use('/', index);
 
