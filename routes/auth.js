@@ -87,13 +87,13 @@ authRoutes.get("/logout", (req, res) => {
 // Private home
 
 authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  res.render("auth/private-page");
+  res.render("auth/private-page", { user: req.user });
 });
 
 // Profile page
 
 authRoutes.get("/auth/profile", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  res.render("auth/profile");
+  res.render("auth/profile", { user: req.user });
 });
 
 // New service
