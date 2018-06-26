@@ -6289,6 +6289,9 @@ a.text-dark:hover, a.text-dark:focus {
 
 nav {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); }
+  nav .navbar-toggler {
+    border-radius: .25rem;
+    outline: none; }
 
 .btn {
   display: block; }
@@ -6300,6 +6303,10 @@ nav {
   height: 10rem;
   margin-bottom: 2rem;
   padding: 2rem 0; }
+
+.input-group.btn-group .form-control {
+  border-top-left-radius: 1.25rem;
+  border-bottom-left-radius: 1.25rem; }
 
 .profile-img > img {
   width: 50%;

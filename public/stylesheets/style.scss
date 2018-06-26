@@ -9,6 +9,10 @@ $btn-border-radius: 1.25rem;
 }
 nav {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+  .navbar-toggler {
+    border-radius: .25rem;
+    outline: none;
+  }
 }
 .btn {
   display: block;
@@ -22,6 +26,13 @@ nav {
   padding: 2rem 0;
 }
 .index-cont {
+}
+
+.input-group.btn-group {
+  .form-control {
+    border-top-left-radius: 1.25rem;
+    border-bottom-left-radius: 1.25rem;
+  }
 }
 
 .profile-img > img {

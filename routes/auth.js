@@ -147,4 +147,13 @@ authRoutes.get("/auth/detail/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
     })  
 });
 
+authRoutes.get("/auth/requested", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  res.render("auth/requested");
+});
+
+authRoutes.get("/auth/rate", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  res.render("auth/rate");
+});
+
+
 module.exports = authRoutes;
