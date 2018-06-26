@@ -6290,6 +6290,9 @@ a.text-dark:hover, a.text-dark:focus {
 nav {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); }
 
+.btn {
+  display: block; }
+
 .index-main {
   color: #fff;
   background: url(https://picsum.photos/g/500) no-repeat;
@@ -6297,9 +6300,6 @@ nav {
   height: 10rem;
   margin-bottom: 2rem;
   padding: 2rem 0; }
-
-.index-cont a {
-  display: block; }
 
 .profile-img > img {
   width: 50%;
