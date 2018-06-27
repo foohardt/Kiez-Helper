@@ -5,13 +5,16 @@ const Service = require('../models/Service');
 const Ratin = require('../models/Rating');
 const authRoutes = express.Router();
 const ensureLogin = require('connect-ensure-login');
-
+const multer  = require('multer');
 
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
+
+// Route to upload path
+const upload = multer({ dest: './public/uploads/' });
 
 // Log in
 
@@ -32,24 +35,27 @@ authRoutes.get("/signup", (req, res, next) => {
   res.render("auth/signup");
 });
 
-authRoutes.post("/signup", (req, res, next) => {
+authRoutes.post("/signup", upload.single('photo'), (req, res, next) => {
 
-  const username = req.body.username;
-  const password = req.body.password;
-  const email = req.body.email;
-  const picture = req.body.image;
-
+  const username    = req.body.username;
+  const password    = req.body.password;
+  const email       = req.body.email;
+  // const pictureUrl  = `/uploads/${req.body.photo}`;
+  const pictureUrl  = "/uploads/" + req.body.photo;
+  console.log(pictureUrl)
+  const picture     = "req.body.file.originalname";
+  
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });
     return;
   }
-
+  
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
       res.render("auth/signup", { message: "The username already exists" });
       return;
     }
-
+    
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
     const newUser = new User({
@@ -57,13 +63,14 @@ authRoutes.post("/signup", (req, res, next) => {
       password: hashPass,
       email,
       picture,
+      pictureUrl
     });
-
+    
     newUser.save((err) => {
       if (err) {
         res.render("auth/signup", { message: "Something went wrong" });
       } else {
-        res.redirect("/");
+        res.redirect("/auth/private-page");
       }
     });
   });
@@ -136,11 +143,16 @@ authRoutes.post("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
 authRoutes.get("/auth/detail/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   let serviceId = req.params.serviceId;
-  // console.log('serviceId' + serviceId);
+  let user = req.user;
   Service.findById(serviceId)
     .then(serviceDetail => {
-      // console.log(serviceDetail)
-      res.render("auth/service-detail", { serviceDetail });
+      User.findById(serviceDetail._user_id)
+      .then(provideUser => {
+        res.render("auth/service-detail", { serviceDetail, provideUser, user });
+      })
+      .catch((error) => {
+        console.log(error)
+      })  
     })
     .catch((error) => {
       console.log(error)
@@ -153,6 +165,10 @@ authRoutes.get("/auth/requested", ensureLogin.ensureLoggedIn(), (req, res, next)
 
 authRoutes.get("/auth/rate", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render("auth/rate");
+});
+
+authRoutes.get("/auth/rated", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  res.render("auth/rated", { user: req.user });
 });
 
 
