@@ -6297,12 +6297,12 @@ nav {
   display: block; }
 
 .index-main {
-  color: #fff;
-  background: url(https://picsum.photos/g/500) no-repeat;
-  background-size: cover;
-  height: 10rem;
+  width: 100vw;
+  background: url(../images/index-main.png) repeat-x bottom;
+  background-size: 100%;
+  height: 15rem;
   margin-bottom: 2rem;
-  padding: 2rem 0; }
+  padding: 3rem 0; }
 
 .input-group.btn-group .form-control {
   border-top-left-radius: 1.25rem;
@@ -6314,6 +6314,9 @@ nav {
 
 .detail-card {
   border: 0; }
+
+.service-card {
+  height: 100%; }
 
 .service-card > .row > .col-4 > img,
 .detail-card > .row > .col-4 > img {
