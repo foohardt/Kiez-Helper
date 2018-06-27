@@ -2,16 +2,20 @@ const express = require('express');
 const passport = require('passport');
 const User = require('../models/User');
 const Service = require('../models/Service');
-const Ratin = require('../models/Rating');
+const Rating = require('../models/Rating');
 const authRoutes = express.Router();
 const ensureLogin = require('connect-ensure-login');
 const nodemailer = require("nodemailer");
+const multer = require('multer');
 
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
+
+// Route to upload path
+const upload = multer({ dest: './public/uploads/' });
 
 // Log in
 
@@ -32,12 +36,15 @@ authRoutes.get("/signup", (req, res, next) => {
   res.render("auth/signup");
 });
 
-authRoutes.post("/signup", (req, res, next) => {
+authRoutes.post("/signup", upload.single('photo'), (req, res, next) => {
 
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-  const picture = req.body.image;
+  // const pictureUrl  = `/uploads/${req.body.photo}`;
+  const pictureUrl = "/uploads/" + req.body.photo;
+  console.log(pictureUrl)
+  const picture = "req.body.file.originalname";
 
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });
@@ -57,13 +64,14 @@ authRoutes.post("/signup", (req, res, next) => {
       password: hashPass,
       email,
       picture,
+      pictureUrl
     });
 
     newUser.save((err) => {
       if (err) {
         res.render("auth/signup", { message: "Something went wrong" });
       } else {
-        res.redirect("/");
+        res.redirect("/auth/private-page");
       }
     });
   });
@@ -120,7 +128,7 @@ authRoutes.post("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
     description: req.body.description,
     location: req.body.location,
     time: req.body.date,
-    requestOwner: req.user.id, serviceDetail
+    requestOwner: req.user.id,
   })
 
   newService.save((error) => {
@@ -136,15 +144,23 @@ authRoutes.post("/auth/new", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
 authRoutes.get("/auth/detail/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   let serviceId = req.params.serviceId;
-
+  let user = req.user;
   Service.findById(serviceId)
     .then(serviceDetail => {
-      res.render("auth/service-detail", { serviceDetail });
+      User.findById(serviceDetail._user_id)
+        .then(provideUser => {
+          res.render("auth/service-detail", { serviceDetail, provideUser, user });
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     })
     .catch((error) => {
       console.log(error)
     })
 });
+
+// Accept Request
 
 authRoutes.get("/auth/requested/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 
@@ -158,7 +174,7 @@ authRoutes.get("/auth/requested/:serviceId", ensureLogin.ensureLoggedIn(), (req,
           // Nodemailer  
           // Message transporter service provider 
           let subjectProvider = "Find my help: Your request answer has been sent";
-          let messageProvider = "Thank you for answering " + serviceDetail.title + " by " + ownerDetail.username + ". Please contact " + ownerDetail.email + " to get in touch with " + ownerDetail.username + "." ;
+          let messageProvider = "Thank you for answering " + serviceDetail.title + " by " + ownerDetail.username + ". Please contact " + ownerDetail.email + " to get in touch with " + ownerDetail.username + ".";
           let transporterProvider = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
@@ -191,32 +207,58 @@ authRoutes.get("/auth/requested/:serviceId", ensureLogin.ensureLoggedIn(), (req,
             text: messageOwner,
             html: `<b>${messageOwner}</b>`
           })
-            .then(info => res.render('auth/requested'))
-            .catch(error => console.log(error));
         })
+    })
+
+  Service.findByIdAndUpdate(serviceId,
+    { $set: { acceptedToken: true, serviceProvider: req.user._id } },
+  )
+    .then(res.render('auth/requested'))
+});
+
+// Ratings
+
+authRoutes.get("/auth/rate/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  let serviceId = req.params.serviceId
+  res.render("auth/rate", { serviceId });
+});
+
+authRoutes.post("/auth/rated/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+
+  serviceId = req.params.serviceId;
+
+  let newRating = new Rating({
+    rate: req.body.inlineRadioOptions,
+    text: req.body.comment,
+    requestId: serviceId,
+    ownerId: req.user.username,
+    providerId: "",
+
+  });
+
+  newRating.save((err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  Service.findByIdAndUpdate(serviceId,
+    { $set: { ratedToken: true } },
+  )
+
+  Service.findById(serviceId)
+    .then(serviceDetail => {
+      Rating.findByIdAndUpdate(newRating._id,
+        { $set: { providerId: serviceDetail.serviceProvider } })
+        .then(res.render("auth/rated"))
         .catch((error) => {
           console.log(error)
         })
     })
 });
 
-authRoutes.get("/auth/rate/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  let serviceId = req.params.serviceId
-  res.render("auth/rate", { serviceId } );
-});
-
-authRoutes.post("/auth/rate/:serviceId", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  console.log(req.body)
-  serviceId = req.params.serviceId;
-  console.log(serviceId);
-  
-  Service.findById(serviceId)
-  .then(serviceDetail => {
-    console.log(serviceDetail)
-  })
-
-
-  res.render("auth/private-page");
+authRoutes.get("/auth/rated", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+  res.render("auth/rated", { user: req.user });
 });
 
 

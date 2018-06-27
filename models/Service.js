@@ -13,7 +13,7 @@ const serviceSchema = new Schema({
   location:  { type: String, default: 'Request location' },
   time: { type: String },
   requestOwner: { type: String },
-  serviceProvider: { type: String},
+  serviceProvider: { type: String, default: '' },
   acceptedToken: { type: Boolean, default: 0 },
   ratedToken: { type: Boolean, default: 0 },
 }, {
