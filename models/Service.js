@@ -8,12 +8,14 @@ const serviceSchema = new Schema({
     enum : ['Shopping', 'Houshold cleaning', 'Gardening', 'Baby sitting', 'Pet sitting', 
             'Computer services', 'Bureaucracy services', 'Craft work', 'Moving and transportation',
           'Clearing out'],
-      
   },
   description: { type: String },
   location:  { type: String, default: 'Request location' },
   time: { type: String },
-  _user_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
+  requestOwner: { type: String },
+  serviceProvider: { type: String, default: '' },
+  acceptedToken: { type: Boolean, default: 0 },
+  ratedToken: { type: Boolean, default: 0 },
 }, {
   timestamps: {
     createdAt: 'created_at',
