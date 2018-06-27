@@ -97,7 +97,8 @@ authRoutes.get("/logout", (req, res) => {
 // Private home
 
 authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  Service.find()
+
+  Service.find({ acceptedToken: false })
     .then((services) => {
       // console.log(services)
       res.render("auth/private-page", { services });
@@ -259,6 +260,17 @@ authRoutes.post("/auth/rated/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
 
 authRoutes.get("/auth/rated", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render("auth/rated", { user: req.user });
+});
+
+// Delete profile
+
+authRoutes.get("/auth/delete-profile", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+
+  User.deleteOne(req.user._id)
+    .then(res.render("/"))
+    .catch((error) => {
+      console.log(error)
+    })
 });
 
 
