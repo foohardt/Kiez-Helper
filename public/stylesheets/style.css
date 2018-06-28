@@ -6347,7 +6347,7 @@ select {
   border-bottom-left-radius: 1.25rem; }
 
 .profile-img-wrap {
-  width: 70%; }
+  margin-top: 2rem; }
 
 .profile-img {
   display: block;
@@ -6406,7 +6406,8 @@ select {
   .detail-card div.row div.col-md-8 h3 {
     text-align: center; }
   .profile-img-wrap {
-    width: 70%; } }
+    width: 70%;
+    margin-top: 0; } }
 
 @media (min-width: 1000px) {
   .index-main,
