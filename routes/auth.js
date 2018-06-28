@@ -86,15 +86,19 @@ authRoutes.get("/logout", (req, res) => {
   })
 });
 
-// Private page
+// Private page (marketplace)
 
 authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  Service.find({ acceptedToken: false})
+
+  Service.find({ acceptedToken: false })
     .then((services) => {
-      console.log(services)
-      console.log(services.requestOwner)
-      User.findById(services.requestOwner)
-    
+      for (let index = 0; index < services.length; index++) {
+        let userId = services[index].requestOwner
+        User.findById(userId)
+          .then(user => {
+            services[index].userPic = user.picture
+          })
+      }
       res.render("auth/private-page", { services });
     })
     .catch((error) => {
@@ -141,7 +145,7 @@ authRoutes.get("/auth/detail/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
   let serviceId = req.params.serviceId;
   let user = req.user;
   Service.findById(serviceId)
-  .then(serviceDetail => {
+    .then(serviceDetail => {
       User.findById(serviceDetail.requestOwner)
         .then(createdUser => {
           res.render("auth/service-detail", { serviceDetail, createdUser, user });
@@ -206,7 +210,7 @@ authRoutes.get("/auth/requested/:serviceId", ensureLogin.ensureLoggedIn(), (req,
     })
 
   Service.findByIdAndUpdate(serviceId,
-    { $set: { acceptedToken: true, serviceProvider: req.user._id } } )
+    { $set: { acceptedToken: true, serviceProvider: req.user._id } })
     .then(res.render('auth/requested'))
 });
 
@@ -243,7 +247,7 @@ authRoutes.post("/auth/rated/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
   });
 
   Service.findByIdAndUpdate(serviceId,
-    { $set: { ratedToken: true } } )
+    { $set: { ratedToken: true } })
 
 
 
@@ -267,13 +271,13 @@ authRoutes.get("/auth/rated", ensureLogin.ensureLoggedIn(), (req, res, next) => 
 // Delete profile
 
 authRoutes.get("/auth/delete-profile", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-
-  User.deleteOne(req.user._id)
-    .then(res.render("/"))
+  User.findByIdAndRemove(req.user.id)
+    .then(res.render("auth/delete-profile"))
     .catch((error) => {
       console.log(error)
     })
-});
+  console.log("DEBUG user has been deleted")
 
+});
 
 module.exports = authRoutes;
