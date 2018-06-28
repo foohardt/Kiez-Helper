@@ -86,10 +86,11 @@ authRoutes.get("/logout", (req, res) => {
   })
 });
 
-// Private home
+// Private page
 
 authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, next) => {
-  Service.find()
+
+  Service.find({ acceptedToken: false })
     .then((services) => {
       // console.log(services)
       res.render("auth/private-page", { services });
@@ -139,7 +140,6 @@ authRoutes.get("/auth/detail/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
   let user = req.user;
   Service.findById(serviceId)
   .then(serviceDetail => {
-    console.log(serviceDetail.requestOwner)
       User.findById(serviceDetail.requestOwner)
         .then(createdUser => {
           res.render("auth/service-detail", { serviceDetail, createdUser, user });
@@ -185,7 +185,7 @@ authRoutes.get("/auth/requested/:serviceId", ensureLogin.ensureLoggedIn(), (req,
 
           // Message transporter service owner 
           let subjectOwner = "Find my help: Your request with the title " + serviceDetail.title + " has been answered";
-          let messageOwner = "Your request has been answered by " + req.user.username + ", who will contact you shortly. As soon as the service is fullfilled you may rate the fullfillment in the following link: http:/localhost:3000/auth/rate/" + req.params.serviceId + ".";
+          let messageOwner = "Your request has been answered by " + req.user.username + ", who will contact you shortly. The last rating of " + req.user.username + " was " + req.user.lastRating + ". As soon as the service is fullfilled you may want to share your experience with other users and rate the quality of the fullfillment in the following link: http:/localhost:3000/auth/rate/" + req.params.serviceId;
           let transporterOwner = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
@@ -243,10 +243,14 @@ authRoutes.post("/auth/rated/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
   Service.findByIdAndUpdate(serviceId,
     { $set: { ratedToken: true } } )
 
+
+
   Service.findById(serviceId)
     .then(serviceDetail => {
       Rating.findByIdAndUpdate(newRating._id,
         { $set: { providerId: serviceDetail.serviceProvider } })
+      User.findByIdAndUpdate(serviceDetail.serviceProvider,
+        { $set: { lastRating: newRating.rate } })
         .then(res.render("auth/rated"))
         .catch((error) => {
           console.log(error)
@@ -256,6 +260,17 @@ authRoutes.post("/auth/rated/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
 
 authRoutes.get("/auth/rated", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   res.render("auth/rated", { user: req.user });
+});
+
+// Delete profile
+
+authRoutes.get("/auth/delete-profile", ensureLogin.ensureLoggedIn(), (req, res, next) => {
+
+  User.deleteOne(req.user._id)
+    .then(res.render("/"))
+    .catch((error) => {
+      console.log(error)
+    })
 });
 
 
