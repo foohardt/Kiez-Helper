@@ -1,26 +1,30 @@
-<a class="btn btn-primary mb-4" href="/auth/new">Create new service</a>
+<a class="btn btn-primary mb-5" href="/auth/new">Create new service</a>
 
-<div class="mb-5">
+{{!-- <div class="mb-5">
   <form action="/private-page" method="get">
     <div class="input-group btn-group">
-      <input class="form-control" name="q" placeholder="Search for" required="">
+      <input class="form-control" name="q" placeholder="Search" required="">
         <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
     </div>
   </form>
-</div>
+</div> --}}
 
-{{#each services}}
-  <div class="service-card card p-3 mb-5">
-    <div class="row mb-3">
-      <div class="col-4">
-        <img class="img-fluid" src="http://placekitten.com/300/300" alt="">
-      </div>
-      <div class="col-8">
-        <h3>{{ this.title }}</h3>
-        <p>{{ this.category }}</p>
-        <p>{{ this.description }}</p>
+<div class="row">
+  {{#each services}}
+    <div class="p-2 mb-5 col-lg-4 col-md-6 col-sm-12">
+      <div class="service-card card">
+        <div class="row pb-3">
+          <div class="col-4">
+            <img class="img-fluid" src="http://placekitten.com/300/300" alt="">
+          </div>
+          <div class="col-8">
+            <h3>{{ this.title }}</h3>
+            <p>{{ this.category }}</p>
+            <p>{{ this.description }}</p>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="/auth/detail/{{ this._id }}">View Detail</a>
       </div>
     </div>
-    <a class="btn btn-primary" href="/auth/detail/{{ this._id }}">View Detail</a>
-  </div>
-{{/each}}
+  {{/each}}
+</div>

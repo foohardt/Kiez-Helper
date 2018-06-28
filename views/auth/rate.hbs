@@ -1,7 +1,6 @@
-<h2 class="text-center mb-5">Please rate the service</h2>
+<h2 class="text-center mb-5">Please rate the service{{ serviceDetail.title }}</h2>
 
-<form action="/auth/rated/{{ serviceId }}" method="POST" id="form-container">
-serviceId{{ serviceId }}
+<form action="/auth/rated/{{ serviceDetail._id }}" method="POST" id="form-container">
   <div class="form-check form-check-inline">
     <label class="form-check-label">
     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value=1> 1

@@ -6296,24 +6296,44 @@ nav {
 .btn {
   display: block; }
 
+button.btn-primary {
+  width: 100%; }
+
 .index-main {
-  color: #fff;
-  background: url(https://picsum.photos/g/500) no-repeat;
-  background-size: cover;
-  height: 10rem;
+  width: 100vw;
+  background: url(../images/index-main.png) repeat-x bottom;
+  background-size: 100%;
+  height: 15rem;
   margin-bottom: 2rem;
-  padding: 2rem 0; }
+  padding: 3rem 0; }
 
 .input-group.btn-group .form-control {
   border-top-left-radius: 1.25rem;
   border-bottom-left-radius: 1.25rem; }
 
-.profile-img > img {
-  width: 50%;
-  border-radius: 50%; }
+.profile-img-wrap {
+  width: 70%; }
+
+.profile-img {
+  display: block;
+  height: 0;
+  width: 100%;
+  background-repeat: none;
+  background-size: cover;
+  border-radius: 50%;
+  padding-bottom: 100%; }
 
 .detail-card {
   border: 0; }
+
+.service-card {
+  height: 100%;
+  position: relative;
+  padding: 1rem 1rem 40px; }
+  .service-card a {
+    position: absolute;
+    width: 90%;
+    bottom: 1rem; }
 
 .service-card > .row > .col-4 > img,
 .detail-card > .row > .col-4 > img {

@@ -17,17 +17,22 @@ nav {
 .btn {
   display: block;
 }
-.index-main {
-  color: #fff;
-  background: url(https://picsum.photos/g/500) no-repeat;
-  background-size: cover; 
-  height: 10rem;
-  margin-bottom: 2rem;
-  padding: 2rem 0;
-}
-.index-cont {
+button.btn-primary {
+  width: 100%;
 }
 
+.index-main {
+  width: 100vw;
+  background: url(../images/index-main.png) repeat-x bottom;
+  background-size: 100%;
+  height: 15rem;
+  margin-bottom: 2rem;
+  padding: 3rem 0;
+}
+// .form-control:focus {
+//   box-shadow: none !important;
+//   border: 1px solid #ccc !important;
+//  }
 .input-group.btn-group {
   .form-control {
     border-top-left-radius: 1.25rem;
@@ -35,12 +40,32 @@ nav {
   }
 }
 
-.profile-img > img {
-  width: 50%;
+.profile-img-wrap {
+  width: 70%;
+
+} 
+.profile-img {
+  display: block;
+  height: 0;
+  width: 100%;
+  background-repeat: none;
+  background-size: cover;
   border-radius: 50%;
+  padding-bottom: 100%;
 }
 .detail-card {
   border: 0;
+}
+.service-card {
+  height: 100%;
+  position: relative;
+  padding: 1rem 1rem 40px;
+
+  a {
+    position: absolute;
+    width: 90%;
+    bottom: 1rem;
+  }
 }
 .service-card > .row > .col-4 > img,
 .detail-card > .row > .col-4 > img {

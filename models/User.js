@@ -6,9 +6,10 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   email:    { type: String, required: true },
   picture:  { type: String, default: ''},
-  pictureUrl: String,
-  lastRating: { type: Number, default: 0},
-  servicesDone: { type: Number, default: 0 },
+  avgRating: { type: Number, default: 0},
+  _rating_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
+  _currentService_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
+  servicesDone: Number,
 }, {
   timestamps: {
     createdAt: 'created_at',

@@ -1,7 +1,7 @@
 <h2 class="text-center">Profile</h2>
 
-<div class="profile-img text-center mb-3">
-  <img src="http://placekitten.com/300/300" alt="">
+<div class="profile-img-wrap text-center mx-auto mb-3 p-4">
+  <div class="profile-img" style="background-image: url({{ user.picture }});"></div>
 </div>
 
 <div class="mb-3 text-center">
@@ -9,7 +9,7 @@
     Username: {{user.username}}<br>
     Email: {{user.email}}
   </p>
-  <a href="#" class="btn btn-primary mb-3">Edit</a>
+  <a href="/auth/delete-profile" class="btn btn-primary mb-3">Delete</a>
 </div>
 
 
