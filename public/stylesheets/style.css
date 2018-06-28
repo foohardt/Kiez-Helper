@@ -6362,7 +6362,8 @@ select {
   .service-card a {
     position: absolute;
     width: calc(100% - 2rem);
-    bottom: 1rem; }
+    bottom: 1rem;
+    left: 1rem; }
 
 .fixed-box {
   position: fixed;
