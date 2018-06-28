@@ -1,16 +1,20 @@
-<h2 class="text-center">Profile</h2>
+<div class="container pt-100">
 
-<div class="profile-img-wrap text-center mx-auto mb-3 p-4">
-  <div class="profile-img" style="background-image: url({{ user.picture }});"></div>
-</div>
+  <h2 class="text-center">Profile</h2>
 
-<div class="mb-3 text-center">
-  <p>
-    Username: {{user.username}}<br>
-    Email: {{user.email}}
-  </p>
-  <a href="/auth/delete-profile" class="btn btn-primary mb-3">Delete</a>
-</div>
+  <div class="profile-img-wrap text-center mx-auto mb-3 p-4">
+    <div class="profile-img" style="background-image: url({{ user.picture }});"></div>
+  </div>
+
+  <div class="mb-3 text-center">
+    <p>
+      Username: {{user.username}}<br>
+      Email: {{user.email}}
+    </p>
+    <a href="/auth/delete-profile" class="btn btn-primary mb-3">Delete</a>
+  </div>
 
 
-<h3 class="text-center">Rate</h3>
+  <h3 class="text-center">Rate</h3>
+
+</div> 

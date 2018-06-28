@@ -16,7 +16,7 @@ const bcryptSalt = 10;
 // Log in
 
 authRoutes.get("/login", (req, res, next) => {
-  res.render("auth/login", { "message": req.flash("error") });
+  res.render("auth/login", { "message": req.flash("error"), layout: false });
 });
 
 authRoutes.post("/login", passport.authenticate("local", {
@@ -29,7 +29,7 @@ authRoutes.post("/login", passport.authenticate("local", {
 // Sign up
 
 authRoutes.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup", {layout: false});
 });
 
 authRoutes.post("/signup", uploadCloud.single('photo'), (req, res, next) => {
