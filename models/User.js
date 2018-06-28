@@ -5,7 +5,7 @@ const userSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   email:    { type: String, required: true },
-  picture:  { type: String, default: ''},
+  picture:  { type: String, default: "http://placekitten.com/300/300" },
   avgRating: { type: Number, default: 0},
   _rating_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
   _currentService_id:[{ type: Schema.Types.ObjectId, ref: '_id'}],
