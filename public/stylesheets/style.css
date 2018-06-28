@@ -6333,6 +6333,12 @@ select {
   margin-bottom: 2rem;
   padding: 3rem 0; }
 
+.bg-box {
+  width: 100vw;
+  background: url(../images/index-main.png) repeat-x bottom;
+  background-size: 100%;
+  padding-bottom: 5rem; }
+
 .index-cont p {
   line-height: 2rem; }
 
@@ -6388,7 +6394,8 @@ select {
 
 @media (min-width: 600px) {
   .index-main,
-  .fixed-box {
+  .fixed-box,
+  .bg-box {
     background-size: 60%; } }
 
 @media (max-width: 768px) {
@@ -6403,7 +6410,8 @@ select {
 
 @media (min-width: 1000px) {
   .index-main,
-  .fixed-box {
+  .fixed-box,
+  .bg-box {
     background-size: 40%; } }
 
 /*# sourceMappingURL=style.css.map */
