@@ -91,7 +91,10 @@ authRoutes.get("/logout", (req, res) => {
 authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   Service.find({ acceptedToken: false})
     .then((services) => {
-      // console.log(services)
+      console.log(services)
+      console.log(services.requestOwner)
+      User.findById(services.requestOwner)
+    
       res.render("auth/private-page", { services });
     })
     .catch((error) => {
