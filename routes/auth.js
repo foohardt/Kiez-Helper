@@ -246,8 +246,6 @@ authRoutes.post("/auth/rated/:serviceId", ensureLogin.ensureLoggedIn(), (req, re
     { $set: { ratedToken: true } },
   )
 
-
-
   Service.findById(serviceId)
     .then(serviceDetail => {
       Rating.findByIdAndUpdate(newRating._id,
