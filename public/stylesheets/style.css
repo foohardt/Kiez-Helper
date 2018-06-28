@@ -6299,6 +6299,9 @@ nav {
 button.btn-primary {
   width: 100%; }
 
+h1 {
+  font-family: 'Lobster', cursive; }
+
 .index-main {
   width: 100vw;
   background: url(../images/index-main.png) repeat-x bottom;
