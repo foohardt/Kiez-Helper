@@ -6345,6 +6345,10 @@ select {
 .index-cont p {
   line-height: 2rem; }
 
+.form-control:focus {
+  box-shadow: none !important;
+  border: 1px solid #ccc !important; }
+
 .input-group.btn-group .form-control {
   border-top-left-radius: 1.25rem;
   border-bottom-left-radius: 1.25rem; }

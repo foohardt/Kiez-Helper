@@ -84,10 +84,10 @@ select {
   }
 }
 
-// .form-control:focus {
-//   box-shadow: none !important;
-//   border: 1px solid #ccc !important;
-//  }
+.form-control:focus {
+  box-shadow: none !important;
+  border: 1px solid #ccc !important;
+ }
 
 .input-group.btn-group {
   .form-control {

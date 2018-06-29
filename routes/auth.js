@@ -92,14 +92,18 @@ authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, ne
 
   Service.find({ acceptedToken: false })
     .then((services) => {
+      let promises = []
       for (let index = 0; index < services.length; index++) {
         let userId = services[index].requestOwner
-        User.findById(userId)
-          .then(user => {
-            services[index].userPic = user.picture
-          })
+        promises.push(User.findById(userId))
       }
-      res.render("auth/private-page", { services });
+      Promise.all(promises)
+      .then(users => {
+        for (let index = 0; index < services.length; index++) {
+          services[index].userPic = users[index] && users[index].picture;
+        }
+        res.render("auth/private-page", { services });
+      })
     })
     .catch((error) => {
       console.log(error)
