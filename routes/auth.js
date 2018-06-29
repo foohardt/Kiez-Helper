@@ -186,7 +186,7 @@ authRoutes.get("/auth/requested/:serviceId", ensureLogin.ensureLoggedIn(), (req,
             }
           });
           transporterProvider.sendMail({
-            from: '"Find-My-Help" <${process.env.GMAIL_EMAIL}>',
+            from: '"Kiez-Helper" <${process.env.GMAIL_EMAIL}>',
             to: req.user.email,
             subject: subjectProvider,
             text: messageProvider,
@@ -195,7 +195,7 @@ authRoutes.get("/auth/requested/:serviceId", ensureLogin.ensureLoggedIn(), (req,
 
           // Message transporter service owner 
           let subjectOwner = "Find my help: Your request with the title " + serviceDetail.title + " has been answered";
-          let messageOwner = "Your request has been answered by " + req.user.username + ", who will contact you shortly. The last rating of " + req.user.username + " was " + req.user.lastRating + ". As soon as the service is fullfilled you may want to share your experience with other users and rate the quality of the fullfillment in the following link: http:/localhost:3000/auth/rate/" + req.params.serviceId;
+          let messageOwner = "Your request has been answered by " + req.user.username + ", who will contact you shortly. The last rating of " + req.user.username + " was " + req.user.lastRating + ". As soon as the service is fullfilled you may want to share your experience with other users and rate the quality of the fullfillment in the following link: https://kiez-helper.herokuapp.com/auth/rate/" + req.params.serviceId;
           let transporterOwner = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
