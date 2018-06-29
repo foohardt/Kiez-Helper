@@ -1,21 +1,31 @@
 {{!-- <h1 class="mb-5"> Hello {{ user.username }} !!</h1> --}}
+<section class="bg-box">
+  <div class="detail-cont mx-auto pt-100">
 
-<div class="detail-card card">
-  <div class="row mb-3">
-    <div class="col-4">
-      <div class="profile-img" style="background-image: url({{ createdUser.picture }});"></div>
-      {{!-- <img class="img-fluid" src="{{ createdUser.picture }}"> --}}
+    <div class="detail-card card">
+      <div class="row mb-3">
+        <div class="col-md-4 mb-3">
+          <div class="profile-img-wrap mx-auto">
+            <div class="profile-img" style="background-image: url({{ createdUser.picture }});"></div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <h3 class="mb-4">{{ serviceDetail.title }}</h3>
+          <p><span class="h-span">Requested by</span>{{ createdUser.username }}</p>
+          <p><span class="h-span">Category</span>{{ serviceDetail.category }}</p>
+          <p><span class="h-span">Time</span>{{ serviceDetail.time }}</p>
+          <p><span class="h-span">Location</span>{{ serviceDetail.location }}</p>
+        </div>
+      </div>
     </div>
-    <div class="col-8">
-      <h3>{{ serviceDetail.title }} <small>by {{ createdUser.username }}</small></h3>
-      <p>{{ serviceDetail.category }}</p>
-      <p>{{ serviceDetail.time }}</p>
-      <p>{{ serviceDetail.location }}</p>
+    <div class="mb-4">
+      <p>{{ serviceDetail.description }}</p>
     </div>
+
+
+    <div class="btn-box mx-auto">
+      <a  href="/auth/requested/{{ serviceDetail._id }}" class="btn btn-primary mb-3">Sure, I can help!</a>
+    </div>
+
   </div>
-</div>
-<p>{{ serviceDetail.description }}</p>
-
-
-
-<a  href="/auth/requested/{{ serviceDetail._id }}" class="btn btn-primary mb-3">Request</a>
+</section>

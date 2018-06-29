@@ -1,28 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Kiez Helper</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
 
-<h2>Login</h2>
+    <section class="bg-box">
 
-<form action="/login" method="POST" id="form-container">
+      <div class="index-cont mx-auto p-4">
+        <h2 class="text-center my-3">Login</h2>
 
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input id="username"  class="form-control" type="text" name="username" placeholder="Your username">
-  </div> 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input id="password" class="form-control" type="password" name="password" placeholder="Your password">
-  </div>
+        <form action="/login" method="POST" id="form-container">
 
-  <br>
-  {{#if message }}
-    <div class="error-message">{{ message }}</div>
-  {{/if}}
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username"  class="form-control" type="text" name="username" placeholder="Your username">
+          </div> 
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" class="form-control" type="password" name="password" placeholder="Your password">
+          </div>
 
-  <br><br>
+          <br>
+          {{#if message }}
+            <div class="error-message">{{ message }}</div>
+          {{/if}}
 
-  <button type="submit" class="btn btn-primary mb-3">Login</button>
+          <br><br>
 
-  <p class="account-message">
-    Don't have an account yet?
-    <a href="/signup">Signup</a>
-  </p>
-</form>
+          <button type="submit" class="btn btn-primary mb-3">Login</button>
+
+          <p class="account-message">
+            Don't have an account yet?
+            <a href="/signup">Signup</a>
+          </p>
+        </form>
+      </div>
+
+    </section>
+
+    <script src='/javascripts/script.js'></script>
+  </body>
+</html>

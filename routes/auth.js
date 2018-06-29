@@ -16,7 +16,7 @@ const bcryptSalt = 10;
 // Log in
 
 authRoutes.get("/login", (req, res, next) => {
-  res.render("auth/login", { "message": req.flash("error") });
+  res.render("auth/login", { "message": req.flash("error"), layout: false });
 });
 
 authRoutes.post("/login", passport.authenticate("local", {
@@ -29,7 +29,7 @@ authRoutes.post("/login", passport.authenticate("local", {
 // Sign up
 
 authRoutes.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup", {layout: false});
 });
 
 authRoutes.post("/signup", uploadCloud.single('photo'), (req, res, next) => {
@@ -92,14 +92,18 @@ authRoutes.get("/auth/private-page", ensureLogin.ensureLoggedIn(), (req, res, ne
 
   Service.find({ acceptedToken: false })
     .then((services) => {
+      let promises = []
       for (let index = 0; index < services.length; index++) {
         let userId = services[index].requestOwner
-        User.findById(userId)
-          .then(user => {
-            services[index].userPic = user.picture
-          })
+        promises.push(User.findById(userId))
       }
-      res.render("auth/private-page", { services });
+      Promise.all(promises)
+      .then(users => {
+        for (let index = 0; index < services.length; index++) {
+          services[index].userPic = users[index] && users[index].picture;
+        }
+        res.render("auth/private-page", { services });
+      })
     })
     .catch((error) => {
       console.log(error)
