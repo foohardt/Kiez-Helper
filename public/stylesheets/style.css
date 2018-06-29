@@ -6340,7 +6340,7 @@ select {
   width: 100vw;
   background: url(../images/index-main.png) repeat-x bottom;
   background-size: 100%;
-  padding-bottom: 10rem; }
+  padding: 0 1rem 10rem; }
 
 .index-cont p {
   line-height: 2rem; }
